@@ -3,22 +3,12 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './schedule.css';
 import ScheduleSetter from './schedule-setter/schedule-setter';
+import ShiftComponent, { type Shift } from '../../component/shift/shift';
 
 interface Employee {
   id: number;
   name: string;
   avatar: string;
-  position: string;
-}
-
-interface Shift {
-  id: number;
-  employeeId: number;
-  date: Date;
-  startTime: string;
-  endTime: string;
-  type: 'morning' | 'afternoon' | 'night' | 'off';
-  status: 'confirmed' | 'pending' | 'rejected';
   position: string;
 }
 
@@ -63,13 +53,6 @@ const formatTime = (time: string): string => {
   return `${hour12}:${minutes} ${ampm}`;
 };
 
-const getInitials = (text: string): string => {
-  return text
-    .split(' ')
-    .map(word => word[0])
-    .join('')
-    .toUpperCase();
-};
 
 const generateMockShifts = (startDate: Date): Shift[] => {
   const shifts: Shift[] = [];
@@ -80,14 +63,14 @@ const generateMockShifts = (startDate: Date): Shift[] => {
     for (let i = 0; i < 7; i++) {
       const date = new Date(startDate);
       date.setDate(date.getDate() + i);
-      
+
       const numShifts = Math.floor(Math.random() * 3) + 1;
-      
+
       for (let j = 0; j < numShifts; j++) {
         const type = shiftTypes[Math.floor(Math.random() * shiftTypes.length)];
         let startTime, endTime;
 
-        switch(type) {
+        switch (type) {
           case 'morning':
             startTime = '08:00';
             endTime = '16:00';
@@ -127,7 +110,7 @@ const Schedule: React.FC = () => {
   const [endDate, setEndDate] = useState<Date | null>(new Date());
   const [shifts, setShifts] = useState<Shift[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCell, setSelectedCell] = useState<{employeeId: number, date: Date} | null>(null);
+  const [selectedCell, setSelectedCell] = useState<{ employeeId: number, date: Date } | null>(null);
 
   useEffect(() => {
     if (startDate) {
@@ -165,15 +148,13 @@ const Schedule: React.FC = () => {
   };
 
   const getShiftsForEmployee = (employeeId: number, date: Date) => {
-    return shifts.filter(shift => 
-      shift.employeeId === employeeId && 
+    return shifts.filter(shift =>
+      shift.employeeId === employeeId &&
       shift.date.toDateString() === date.toDateString()
     );
   };
 
-  const getShiftClass = (shift: Shift) => {
-    return `shift-item ${shift.status}`;
-  };
+
 
   const handleAddShift = (employeeId: number, date: Date) => {
     setSelectedCell({ employeeId, date });
@@ -235,20 +216,16 @@ const Schedule: React.FC = () => {
                         {dayShifts.length > 0 ? (
                           <div className="shifts-container">
                             {dayShifts.map(shift => (
-                              <div key={shift.id} className={getShiftClass(shift)}>
-                                <div className="shift-time">
-                                  {formatTime(shift.startTime)} - {formatTime(shift.endTime)}
-                                </div>
-                                <div className="shift-position" title={shift.position}>
-                                  {getInitials(shift.position)}
-                                </div>
-                              </div>
+                              <ShiftComponent
+                                {...shift}
+                                key={shift.id}
+                              />
                             ))}
                           </div>
                         ) : (
                           <div className="no-shifts">No shifts</div>
                         )}
-                        <button 
+                        <button
                           className="add-shift-button"
                           onClick={() => handleAddShift(employee.id, date)}
                           title="Add shift"
@@ -276,7 +253,7 @@ const Schedule: React.FC = () => {
               <button className="close-button" onClick={handleCloseModal}>×</button>
             </div>
             <div className="modal-body">
-              <ScheduleSetter 
+              <ScheduleSetter
                 employeeId={selectedCell.employeeId}
                 date={selectedCell.date}
                 onClose={handleCloseModal}
