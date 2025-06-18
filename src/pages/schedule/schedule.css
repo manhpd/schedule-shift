@@ -1,0 +1,263 @@
+.schedule-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.week-picker {
+  position: relative;
+}
+
+.date-picker-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  min-width: 200px;
+}
+
+.date-picker-input:hover {
+  border-color: #999;
+}
+
+.schedule-content {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #333;
+  margin: 0;
+}
+
+/* Schedule Table Styles */
+.schedule-table {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #e2e8f0;
+}
+
+th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #475569;
+}
+
+.employee-column {
+  width: 250px;
+}
+
+.employee-cell {
+  background-color: #ffffff;
+}
+
+.employee-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.employee-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.employee-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.employee-name {
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.employee-position {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.schedule-cell {
+  position: relative;
+  min-height: 100px;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  background-color: white;
+}
+
+.add-shift-button {
+  margin-top:2px;
+  border-radius: 4px;
+  width: 100%;
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.add-shift-button:hover {
+  background-color: #e0e0e0;
+}
+
+.schedule-cell:hover .add-shift-button {
+  opacity: 1;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+/* Shift Styles */
+.shifts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shift-item {
+  padding: 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shift-time {
+  font-weight: 500;
+}
+
+.shift-position {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 0.7rem;
+  cursor: help;
+}
+
+.no-shifts {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  text-align: center;
+  padding: 8px;
+}
+
+/* Shift Status Colors */
+.shift-item.confirmed {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.shift-item.pending {
+  background-color: #fef9c3;
+  color: #854d0e;
+}
+
+.shift-item.rejected {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Override react-datepicker styles */
+.react-datepicker {
+  font-family: inherit;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.react-datepicker__header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-range {
+  background-color: #007bff !important;
+  color: white !important;
+}
+
+.react-datepicker__day--in-selecting-range {
+  background-color: #e3f2fd !important;
+} 
